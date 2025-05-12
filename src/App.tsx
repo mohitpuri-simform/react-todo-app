@@ -4,17 +4,20 @@ import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
 import TodoPage from "./pages/TodoPage";
 import Layout from "./layout/Layout";
+import { TodoProvider } from "./store/TodoContext";
 
 function App() {
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index path="/" element={<HomePage />} />
-          <Route path="about" element={<AboutPage />} />
-          <Route path="todos" element={<TodoPage />} />
-        </Route>
-      </Routes>
+      <TodoProvider>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index path="/" element={<HomePage />} />
+            <Route path="about" element={<AboutPage />} />
+            <Route path="todos" element={<TodoPage />} />
+          </Route>
+        </Routes>
+      </TodoProvider>
     </>
   );
 }
