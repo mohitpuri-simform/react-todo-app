@@ -20,7 +20,10 @@ function RenderTodo({ todo, index }: RenderTodoProps) {
     setIsEditing(false);
     dispatch({
       type: "EDIT_TODO",
-      payload: { id: todo.id, task: editRef.current!.value },
+      payload: {
+        id: todo.id,
+        task: editRef.current?.value ? editRef.current?.value : todo.task,
+      },
     });
   }
 
