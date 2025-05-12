@@ -32,8 +32,6 @@ export function todoReducer(state: TodoState, action: TodoAction): TodoState {
       return {
         todos: state.todos.map((todo) => {
           if (todo.id === action.payload.id) {
-            console.log(action.payload.task);
-
             todo.task = action.payload.task;
           }
           return todo;
