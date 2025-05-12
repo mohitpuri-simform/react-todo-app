@@ -50,41 +50,40 @@ function RenderTodo({ todo, index }: RenderTodoProps) {
         >
           Status: {todo.isDone ? "Completed" : "Pending"}
         </p>
+        <div className="flex gap-2 mt-1 ml-1">
+          <button
+            className="px-3 py-1 text-sm bg-green-500 text-white rounded hover:bg-green-600"
+            onClick={() =>
+              dispatch({
+                type: "MARK_AS_DONE",
+                payload: { id: todo.id },
+              })
+            }
+          >
+            Mark as Done
+          </button>
+          <button
+            className="px-3 py-1 text-sm bg-green-500 text-white rounded hover:bg-green-600"
+            onClick={() => {
+              setIsEditing(true);
+              editRef.current?.focus();
+            }}
+          >
+            Edit
+          </button>
+          <button
+            className="px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600"
+            onClick={() =>
+              dispatch({
+                type: "DELETE_TODO",
+                payload: { id: todo.id },
+              })
+            }
+          >
+            Delete
+          </button>
+        </div>
       </li>
-
-      <div className="flex gap-2 mt-1 ml-1">
-        <button
-          className="px-3 py-1 text-sm bg-green-500 text-white rounded hover:bg-green-600"
-          onClick={() =>
-            dispatch({
-              type: "MARK_AS_DONE",
-              payload: { id: todo.id },
-            })
-          }
-        >
-          Mark as Done
-        </button>
-        <button
-          className="px-3 py-1 text-sm bg-green-500 text-white rounded hover:bg-green-600"
-          onClick={() => {
-            setIsEditing(true);
-            editRef.current?.focus();
-          }}
-        >
-          Edit
-        </button>
-        <button
-          className="px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600"
-          onClick={() =>
-            dispatch({
-              type: "DELETE_TODO",
-              payload: { id: todo.id },
-            })
-          }
-        >
-          Delete
-        </button>
-      </div>
     </>
   );
 }
