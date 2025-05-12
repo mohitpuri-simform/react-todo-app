@@ -2,6 +2,8 @@ import { useContext, useRef } from "react";
 import { uid } from "uid";
 import { TodoContext } from "../store/TodoContext";
 import { getCreatedAt } from "../utils/getCurrentDate";
+import RenderTodo from "../components/RenderTodo";
+
 function TodoPage() {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -11,7 +13,8 @@ function TodoPage() {
   const { todos, dispatch } = context;
 
   function handleAddTodo() {
-    const text = inputRef.current?.value.trim();
+    if (!inputRef.current) return;
+    const text = inputRef.current.value.trim();
     if (!text) {
       return;
     }
@@ -26,7 +29,7 @@ function TodoPage() {
         createdAt: currentTime,
       },
     });
-    inputRef.current!.value = "";
+    inputRef.current.value = "";
   }
 
   return (
@@ -51,13 +54,12 @@ function TodoPage() {
         <ul className="space-y-4">
           {todos.todos &&
             todos.todos.map((todo, index) => (
-              <RenderTodo index={index} todo={todo} key={todo.createdAt} />
+              <RenderTodo index={index} todo={todo} key={todo.id} />
             ))}
         </ul>
       </div>
     </div>
   );
 }
-import RenderTodo from "../components/RenderTodo";
 
 export default TodoPage;
