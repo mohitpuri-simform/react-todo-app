@@ -6,7 +6,7 @@ function Layout() {
     <>
       <Navbar />
 
-      <main className="p-2">
+      <main>
         <Outlet />
       </main>
     </>
