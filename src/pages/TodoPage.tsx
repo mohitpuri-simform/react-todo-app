@@ -1,17 +1,33 @@
-import { useContext, useRef } from "react";
+import { useContext, useRef, type ChangeEvent } from "react";
 import { uid } from "uid";
 import { TodoContext } from "../store/TodoContext";
 import { getCreatedAt } from "../utils/getCurrentDate";
+import RenderTodo from "../components/RenderTodo";
+
+import { useSearchParams } from "react-router";
+
 function TodoPage() {
   const inputRef = useRef<HTMLInputElement | null>(null);
-
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
   const context = useContext(TodoContext);
 
-  if (!context) return "context cannot be empty";
   const { todos, dispatch } = context;
 
+  const filteredTitle = searchParams.get("title")?.toLowerCase() ?? "";
+
+  const filteredTodos = todos.todos.filter((todo) =>
+    todo.task.toLowerCase().includes(filteredTitle)
+  );
+
+  function handleFilterChange(e: ChangeEvent<HTMLInputElement>) {
+    const value = e.target.value;
+    setSearchParams({ title: value });
+  }
+
   function handleAddTodo() {
-    const text = inputRef.current?.value.trim();
+    if (!inputRef.current) return;
+    const text = inputRef.current.value.trim();
     if (!text) {
       return;
     }
@@ -26,7 +42,7 @@ function TodoPage() {
         createdAt: currentTime,
       },
     });
-    inputRef.current!.value = "";
+    inputRef.current.value = "";
   }
 
   return (
@@ -45,19 +61,27 @@ function TodoPage() {
           Add
         </button>
       </div>
+      <div>
+        <input
+          type="text"
+          placeholder="search the todos by title"
+          className="flex-grow px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+          ref={searchInputRef}
+          value={filteredTitle}
+          onChange={handleFilterChange}
+        />
+      </div>
 
       <div>
         <p className="text-lg font-semibold mb-2">Your Todos:</p>
         <ul className="space-y-4">
-          {todos.todos &&
-            todos.todos.map((todo, index) => (
-              <RenderTodo index={index} todo={todo} key={todo.createdAt} />
-            ))}
+          {filteredTodos.map((todo, index) => (
+            <RenderTodo index={index} todo={todo} key={todo.createdAt} />
+          ))}
         </ul>
       </div>
     </div>
   );
 }
-import RenderTodo from "../components/RenderTodo";
 
 export default TodoPage;

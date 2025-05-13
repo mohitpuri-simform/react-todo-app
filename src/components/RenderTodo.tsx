@@ -1,6 +1,7 @@
 import type { Todo } from "../types";
 import { useContext, useRef, useState } from "react";
 import { TodoContext } from "../store/TodoContext";
+import { Link } from "react-router";
 
 interface RenderTodoProps {
   todo: Todo;
@@ -38,8 +39,14 @@ function RenderTodo({ todo, index }: RenderTodoProps) {
             onBlur={handleInputBlur}
           />
         ) : (
-          <p className="font-medium text-gray-700">
+          <p className="font-medium text-gray-700 flex items-center justify-between">
             #{index + 1}: {todo.task}
+            <Link
+              to={`/todos/${todo.id}`}
+              className="border-2 bg-green-500 px-2 py-1 rounded-xl"
+            >
+              Open
+            </Link>
           </p>
         )}
         <p className="text-sm text-gray-500">Created at: {todo.createdAt}</p>
@@ -51,26 +58,6 @@ function RenderTodo({ todo, index }: RenderTodoProps) {
           Status: {todo.isDone ? "Completed" : "Pending"}
         </p>
         <div className="flex gap-2 mt-1 ml-1">
-          <button
-            className="px-3 py-1 text-sm bg-green-500 text-white rounded hover:bg-green-600"
-            onClick={() =>
-              dispatch({
-                type: "MARK_AS_DONE",
-                payload: { id: todo.id },
-              })
-            }
-          >
-            Mark as Done
-          </button>
-          <button
-            className="px-3 py-1 text-sm bg-green-500 text-white rounded hover:bg-green-600"
-            onClick={() => {
-              setIsEditing(true);
-              editRef.current?.focus();
-            }}
-          >
-            Edit
-          </button>
           <button
             className="px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600"
             onClick={() =>

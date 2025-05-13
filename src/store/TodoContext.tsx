@@ -15,9 +15,10 @@ type TodoContextType = {
   dispatch: React.Dispatch<TodoAction>;
 };
 
-export const TodoContext = createContext<TodoContextType | undefined>(
-  undefined
-);
+export const TodoContext = createContext<TodoContextType>({
+  todos: { todos: [] },
+  dispatch: () => {},
+});
 
 export function TodoProvider({ children }: TodoProviderProps) {
   const [todos, dispatch] = useReducer(todoReducer, initialState);
