@@ -1,12 +1,12 @@
-import { useRoutes } from "react-router";
+import Router from "./routes/Router";
 import { TodoProvider } from "./store/TodoContext";
-import { routes } from "./routes/routeConfig";
 
 function App() {
-  const router = useRoutes(routes);
   return (
     <>
-      <TodoProvider>{router}</TodoProvider>
+      <TodoProvider>
+        <Router />
+      </TodoProvider>
     </>
   );
 }
