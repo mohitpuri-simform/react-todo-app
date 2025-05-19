@@ -33,7 +33,10 @@ function DisplayTodoItem() {
       {todos.todos.map((todo, index) => {
         if (todo.id === params.id) {
           return (
-            <div className="p-4 border border-gray-300 rounded-md shadow-sm bg-gray-50">
+            <div
+              key={todo.id}
+              className="p-4 border border-gray-300 rounded-md shadow-sm bg-gray-50"
+            >
               {isEditing ? (
                 <input
                   className="border-2"
