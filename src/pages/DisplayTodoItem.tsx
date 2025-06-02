@@ -42,6 +42,7 @@ function DisplayTodoItem() {
           <input
             className="border-2"
             type="text"
+            defaultValue={todo.task}
             ref={editRef}
             onBlur={() => handleInputBlur(todo)}
           />
