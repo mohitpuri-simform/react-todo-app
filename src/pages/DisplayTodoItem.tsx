@@ -5,13 +5,13 @@ import type { Todo } from "../types";
 
 import ActionButtonWrapper from "../components/ActionButtonWrapper";
 
-type params = {
+type Params = {
   id: string;
 };
 
 function DisplayTodoItem() {
   const context = useContext(TodoContext);
-  const params = useParams<params>();
+  const params = useParams<Params>();
   const [isEditing, setIsEditing] = useState(false);
   const editRef = useRef<HTMLInputElement>(null);
   if (!context) return;
@@ -42,6 +42,7 @@ function DisplayTodoItem() {
           <input
             className="border-2"
             type="text"
+            defaultValue={todo.task}
             ref={editRef}
             onBlur={() => handleInputBlur(todo)}
           />
